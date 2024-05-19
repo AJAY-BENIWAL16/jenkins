@@ -50,7 +50,7 @@ pipeline {
 
     post {
         success {
-            mail to: "ajay161098@gmail.com",
+            mail to: "antibts40@gmail.com",
             subject: "Build Status Notification",
             body: "Build completed successfully"
         }
