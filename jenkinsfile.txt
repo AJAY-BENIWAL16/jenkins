@@ -2,51 +2,57 @@ pipeline {
     agent any
 
     environment {
-        SOURCE_PATH = '/path/to/source/files'
-        TEST_ENV = 'test_pipeline_env'
-        PROD_ENV = 'production'
+        SOURCE_DIRECTORY = "/path/to/source/code/"
+        TEST_ENVIRONMENT = "test_environment"
+        PRODUCTION_ENVIRONMENT = "production_site_ajay"
     }
 
     stages {
-        stage('Compile') {
+        stage('Compilation') {
             steps {
-                echo "Retrieving source files from: ${env.SOURCE_PATH}"
-                echo "Building the project and creating output files."
+                echo "Retrieving source code from: ${env.SOURCE_DIRECTORY}"
+                echo "Building the software and generating artifacts"
             }
         }
 
-        stage('Testing') {
+        stage('Testing Phase') {
             steps {
-                echo "Executing unit tests."
-                echo "Executing integration tests."
+                echo "Running unit tests"
+                echo "Conducting integration tests"
             }
         }
 
         stage('Quality Assurance') {
             steps {
-                echo "Performing code quality assessments."
+                echo "Analyzing code quality"
             }
         }
 
-        stage('Staging Deployment') {
+        stage('Deployment to Testing') {
             steps {
-                echo "Deploying to staging environment: ${env.TEST_ENV}"
+                echo "Deploying the application to ${env.TEST_ENVIRONMENT}"
             }
         }
 
-        stage('Manual Approval') {
+        stage('Approval') {
             steps {
-                script {
-                    echo "Awaiting manual approval..."
-                    sleep 10
-                }
+                echo "Awaiting manual approval..."
+                sleep(time: 15, unit: 'SECONDS')
             }
         }
 
         stage('Production Deployment') {
             steps {
-                echo "Deploying to production environment: ${env.PROD_ENV}"
+                echo "Deploying application to ${env.PRODUCTION_ENVIRONMENT}"
             }
+        }
+    }
+
+    post {
+        success {
+            mail to: "ajay161098@gmail.com",
+            subject: "Build Status Notification",
+            body: "Build completed successfully"
         }
     }
 }
